@@ -1,91 +1,342 @@
 GhostProof
 
-Digital Evidence Integrity Analysis Tool
+<p align="center">
+  <strong>Digital Evidence Integrity Analysis</strong><br>
+  A lightweight, privacy-first browser tool for hashing evidence, extracting timestamps, reconstructing timelines, and identifying potential inconsistencies.
+</p>
 
-🌐 Live Demo: https://ghostproof-one.vercel.app/
+<p align="center">
+  <a href="https://ghostproof-one.vercel.app/">Live Demo</a>
+  ·
+  <a href="https://github.com/BRKE123/ghostproof">Source Code</a>
+</p>
 
-GhostProof is a browser-based MVP for analyzing digital evidence and identifying possible inconsistencies in evidence timelines.
+Overview
 
-Features
+GhostProof is a client-side digital evidence analysis tool designed to help investigators, security researchers, students, and developers perform an initial integrity review of evidence files.
 
-🔐 Calculates SHA-256 hashes locally
+The application processes supported files directly in the browser and produces a structured analysis containing:
 
-🕒 Extracts basic timestamps from supported text-based evidence
+SHA-256 cryptographic hashes
 
-📅 Builds an evidence timeline
+Extracted timestamps
 
-⚠️ Flags possible timestamp inconsistencies
+Chronological evidence timelines
 
-📊 Displays file details and integrity information
+Potential timestamp inconsistencies
 
-📄 Exports an analysis report as JSON
+File metadata available to the browser
 
-🔒 Files are analyzed locally in the browser by this MVP
+Exportable JSON analysis reports
 
-How to Use
+GhostProof is intentionally lightweight and does not require an application account or a dedicated backend for its core analysis workflow.
 
-Open the GhostProof live demo.
+Status: MVP / research and educational tool
 
-Click Choose files or drag evidence into the upload area.
+Live Application
+
+https://ghostproof-one.vercel.app/
+
+Open the application, add evidence files, and select Analyze evidence.
+
+Key Capabilities
+
+Evidence Hashing
+
+GhostProof calculates a SHA-256 hash for each selected file using the browser's Web Crypto API.
+
+A hash can be used as a compact integrity identifier for the exact file content that was analyzed.
+
+Timeline Reconstruction
+
+The application extracts recognizable timestamps from supported text-based evidence and organizes them chronologically.
+
+Example sources include:
+
+.txt
+
+.log
+
+.csv
+
+.json
+
+.xml
+
+.html
+
+.md
+
+Inconsistency Detection
+
+GhostProof compares extracted timestamps with the file timestamp exposed to the browser and can flag situations that deserve further investigation.
+
+The application deliberately reports these as possible inconsistencies, rather than claiming that manipulation occurred.
+
+Local Processing
+
+Evidence analysis is performed in the browser in the current MVP.
+
+Files are not uploaded to a GhostProof server as part of the core analysis workflow.
+
+Report Export
+
+Analysis results can be exported as a JSON report for later review or documentation.
+
+How It Works
+
+                    ┌─────────────────────┐
+                    │   Select Evidence   │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │  Browser Processing  │
+                    └──────────┬──────────┘
+                               │
+              ┌────────────────┼────────────────┐
+              ▼                ▼                ▼
+        SHA-256 Hash      Timestamp         File Metadata
+              │            Extraction             │
+              └────────────────┼─────────────────┘
+                               ▼
+                    ┌─────────────────────┐
+                    │ Timeline Analysis   │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │ Possible Issues     │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │    JSON Report      │
+                    └─────────────────────┘
+
+Quick Start
+
+Option 1 — Use the Live Version
+
+Open:
+
+https://ghostproof-one.vercel.app/
+
+No installation is required.
+
+Option 2 — Run Locally
+
+Clone the repository:
+
+git clone https://github.com/BRKE123/ghostproof.git
+cd ghostproof
+
+Because GhostProof is a static browser application, it can be served using any simple HTTP server.
+
+For Python:
+
+python3 -m http.server 8000
+
+Then open:
+
+http://localhost:8000
+
+Usage
+
+Open GhostProof.
+
+Select one or more evidence files.
+
+Review the selected files.
 
 Click Analyze evidence.
 
-Review the hashes, timeline, possible inconsistencies, and file details.
+Review:
 
-Click Export report to save the analysis as JSON.
+SHA-256 hashes
+
+extracted timestamps
+
+reconstructed timeline
+
+possible inconsistencies
+
+file information
+
+Select Export report to generate the JSON analysis report.
 
 Test File
 
-A sample test file is included in this project:
+A sample ghostproof-test.txt file can be used to verify the basic timestamp extraction and timeline functionality.
 
-ghostproof-test.txt
+Project Structure
 
-You can use it to verify timestamp extraction, timeline generation, hashing, and report export.
+ghostproof/
+├── index.html       # Application interface
+├── style.css        # Application styling
+├── app.js           # Evidence analysis logic
+├── README.md        # Project documentation
+└── LICENSE          # MIT License
 
-Privacy
-
-GhostProof's current MVP performs file analysis locally in the user's browser. The uploaded files are not sent to a GhostProof backend.
-
-Important Disclaimer
-
-GhostProof provides indicators for investigation. It does not automatically prove that evidence has been manipulated.
-
-For real investigations, preserve original evidence and verify findings using appropriate forensic procedures, acquisition methods, metadata, and chain-of-custody practices.
+Technology Stack
 
 Technology
 
-HTML
+Purpose
 
-CSS
+HTML5
+
+Application structure
+
+CSS3
+
+User interface and responsive layout
 
 JavaScript
 
+Analysis and application logic
+
 Web Crypto API
+
+SHA-256 hashing
+
+File API
+
+Local browser file access
 
 Vercel
 
+Deployment
+
+No database or application server is required for the current MVP.
+
+Security & Privacy
+
+GhostProof follows a local-first approach for its core analysis.
+
+What happens to selected files?
+
+The browser reads the files selected by the user and performs the analysis locally.
+
+The current application does not require:
+
+User accounts
+
+Passwords
+
+API keys
+
+A database
+
+A GhostProof backend
+
+Important
+
+Browser-provided file metadata should not be treated as equivalent to forensic filesystem metadata.
+
+For high-assurance investigations, evidence should be acquired and preserved using appropriate forensic procedures.
+
+Forensic Limitations
+
+GhostProof is an initial analysis and triage tool, not a replacement for professional digital forensics.
+
+A flagged inconsistency does not by itself establish that evidence was altered.
+
+For example, timestamps can differ because of:
+
+Time-zone conversions
+
+Clock configuration
+
+File copying
+
+Export operations
+
+Application-specific timestamp semantics
+
+Browser or operating-system behavior
+
+Differences between content timestamps and filesystem timestamps
+
+For evidentiary use, investigators should preserve the original source material and maintain appropriate acquisition records and chain-of-custody documentation.
+
+Design Principles
+
+GhostProof is built around four principles:
+
+Privacy-first
+Process evidence locally whenever possible.
+
+Integrity-focused
+Use cryptographic hashes to identify analyzed file content.
+
+Explainable analysis
+Present observations and indicators instead of making unsupported conclusions.
+
+Minimal infrastructure
+Keep the MVP simple, portable, and easy to audit.
+
+Roadmap
+
+Potential future improvements include:
+
+More robust timestamp parsers
+
+EXIF and document metadata analysis
+
+Browser-history specific parsers
+
+Log-format detection
+
+Evidence manifest generation
+
+Signed analysis reports
+
+Chain-of-custody workflow
+
+Additional hash algorithms
+
+File-type identification
+
+Advanced timeline correlation
+
+Automated anomaly scoring
+
+Unit and integration test coverage
+
+Contributing
+
+Contributions, suggestions, and security-focused improvements are welcome.
+
+A typical contribution workflow:
+
+git checkout -b feature/your-feature
+
+Make your changes, test them locally, and open a pull request.
+
+Please keep changes focused and document security-sensitive behavior clearly.
+
+Responsible Use
+
+GhostProof should be used for legitimate security research, incident response, education, software testing, and authorized investigations.
+
+Do not use the tool to fabricate, manipulate, or misrepresent digital evidence.
+
 License
 
-This project is licensed under the MIT License.
+GhostProof is released under the MIT License.
 
-Copyright (c) 2026 BRKE
+Copyright © 2026 BRKE.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+See LICENSE for the complete license text.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+Project Links
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Live Application: https://ghostproof-one.vercel.app/
 
-GhostProof — Find the gaps in your evidence timeline.
+GitHub Repository: https://github.com/BRKE123/ghostproof
+
+<p align="center">
+  <strong>GhostProof</strong><br>
+  <sub>Find the gaps in your evidence timeline.</sub>
+</p>
