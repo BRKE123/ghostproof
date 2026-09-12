@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GhostProof — Evidence Integrity</title>
+  <meta name="description" content="GhostProof analyzes digital evidence for possible metadata and timeline inconsistencies." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="mark">G</span> GhostProof</div>
+    <span class="badge">MVP • Local analysis</span>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <p class="eyebrow">DIGITAL EVIDENCE INTEGRITY</p>
+      <h1>Find the gaps in your evidence timeline.</h1>
+      <p class="sub">Upload evidence and GhostProof calculates SHA-256 hashes, extracts basic timestamps, builds a timeline, and flags possible inconsistencies.</p>
+    </section>
+
+    <section class="card upload-card">
+      <div id="dropzone" class="dropzone" tabindex="0">
+        <div class="upload-icon">↑</div>
+        <h2>Drop evidence here</h2>
+        <p>or choose files from your device</p>
+        <input id="fileInput" type="file" multiple hidden />
+        <button id="chooseBtn" class="primary">Choose files</button>
+        <small>Files are analyzed in your browser and are not uploaded by this MVP.</small>
+      </div>
+      <div class="actions">
+        <button id="analyzeBtn" class="primary" disabled>Analyze evidence</button>
+        <button id="clearBtn" class="secondary">Clear</button>
+      </div>
+      <div id="fileList" class="file-list"></div>
+    </section>
+
+    <section id="results" class="results hidden">
+      <div class="stats">
+        <div class="stat"><span>Evidence</span><strong id="statFiles">0</strong></div>
+        <div class="stat"><span>Hashes</span><strong id="statHashes">0</strong></div>
+        <div class="stat"><span>Warnings</span><strong id="statWarnings">0</strong></div>
+      </div>
+
+      <div class="card">
+        <div class="section-head">
+          <div><p class="eyebrow">TIMELINE</p><h2>Evidence events</h2></div>
+          <button id="exportBtn" class="secondary">Export report</button>
+        </div>
+        <div id="timeline" class="timeline"></div>
+      </div>
+
+      <div class="card">
+        <div class="section-head"><div><p class="eyebrow">INTEGRITY CHECKS</p><h2>Possible inconsistencies</h2></div></div>
+        <div id="warnings"></div>
+      </div>
+
+      <div class="card">
+        <div class="section-head"><div><p class="eyebrow">EVIDENCE</p><h2>File details</h2></div></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>File</th><th>Size</th><th>Modified</th><th>SHA-256</th></tr></thead>
+            <tbody id="details"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <p class="disclaimer">GhostProof provides indicators, not proof of tampering. Preserve originals and verify findings with proper forensic procedures.</p>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
